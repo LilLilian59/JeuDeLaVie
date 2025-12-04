@@ -1,0 +1,62 @@
+DOCUMENTATION :
+
+ Classe Cell
+•	Chaque cellule est un carré (sf::RectangleShape) affiché dans la fenêtre.
+•	États possibles :
+o	vivante (noire),
+o	morte (blanche),
+o	obstacle (gris).
+•	Méthodes principales :
+•	setAlive(bool) : change l’état vivant/mort (sauf si obstacle).
+•	toggleObstacle() : bascule obstacle ↔ normal.
+•	draw() : dessine la cellule.
+
+ Classe RuleEngine
+•	Contient la logique du Jeu de la Vie : 
+o	Cellule vivante avec 2 ou 3 voisins → survit.
+o	Cellule vivante avec moins de 2 voisins → meurt (sou population).
+o	Cellule vivante avec plus de 3 voisins → meurt (surpopulation).
+o	Cellule morte avec exactement 3 voisins → devient vivante (reproduction).
+•	Si la cellule est un obstacle, elle ne change jamais.
+
+ Classe Grid
+•	Dimensions fixes : 50 colonnes × 30 lignes, chaque cellule fait 12 pixels.
+•	Stocke toutes les cellules dans un tableau 2D.
+•	Méthodes :
+•	countNeighbours(x,y) : compte les voisins vivants autour d’une cellule (avec bords repliés → la grille est torique).
+•	update() : calcule la nouvelle génération selon les règles.
+•	clear() : remet toutes les cellules mortes et supprime les obstacles.
+•	draw() : dessine toutes les cellules.
+•	getCell(x,y) : accès direct à une cellule.
+
+Classe PatternManager
+Permet de placer des motifs prédéfinis :
+•	placeGlider(x,y) : place un planeur.
+•	place_block(x,y) : place un bloc stable (2×2).
+•	placeVaisseau(x,y) : place un vaisseau (oscillateur mobile).
+
+ Classe InputHandler
+Gère les événements clavier/souris :
+•	Souris gauche : rendre une cellule vivante.
+•	Souris droite : rendre une cellule morte.
+•	Touche O : basculer obstacle.
+•	Espace : démarrer/arrêter la simulation.
+•	G : placer un glider.
+•	B : placer un bloc.
+•	V : placer un vaisseau.
+•	R : réinitialiser la grille (tout effacer).
+•	Échap ou fermeture fenêtre : quitter.
+
+ Classe Renderer
+•	render() : efface la fenêtre, dessine la grille, affiche le résultat.
+
+ Classe GameOfLifeApp
+•	Crée la fenêtre SFML.
+•	Boucle principale :
+1.	Gérer les entrées (InputHandler).
+2.	Mettre à jour la grille si la simulation est en cours.
+3.	Dessiner la grille.
+
+
+
+
